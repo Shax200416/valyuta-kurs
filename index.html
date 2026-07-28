@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Valyuta kursi bugun — Dollar, Euro, Rubl so'mga | Kurs.uz</title>
+	<meta name="description"
+		content="1 dollar necha so'm bugun? CBU rasmiy kursi bo'yicha USD, EUR, RUB, GBP va boshqa valyutalarni so'mga aylantiring. Kurs grafigi va tarixiy ma'lumotlar.">
+	<meta name="keywords"
+		content="dollar kurs bugun, 1 dollar necha som, valyuta kursi, som dollar, euro som, rubl som, CBU kurs">
+	<meta property="og:title" content="Valyuta kursi bugun — Kurs.uz">
+	<meta property="og:description"
+		content="Dollar, euro, rubl va boshqa valyutalarni so'mga aylantiring. CBU rasmiy kursi.">
+	<meta property="og:type" content="website">
+	<link rel="alternate" hreflang="uz" href="https://kurs.uz">
+	<link rel="alternate" hreflang="ru" href="https://kurs.uz">
+	<link rel="alternate" hreflang="en" href="https://kurs.uz">
+	<link rel="canonical" href="https://kurs.uz">
+
+	<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Kurs.uz — Valyuta konvertori",
+  "description": "O'zbekiston Markaziy banki (CBU) rasmiy kurslari bo'yicha valyuta konvertori",
+  "url": "https://kurs.uz",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+	<style>
+		:root {
+			--bg: #ffffff;
+			--bg2: #f5f5f3;
+			--bg3: #ebebea;
+			--text: #111110;
+			--text2: #6b6b68;
+			--text3: #9b9b97;
+			--border: rgba(0, 0, 0, 0.09);
+			--border2: rgba(0, 0, 0, 0.15);
+			--accent: #2563eb;
+			--accent-bg: #eff6ff;
+			--accent-text: #1d4ed8;
+			--green: #16a34a;
+			--red: #dc2626;
+			--radius: 10px;
+			--radius-lg: 16px;
+		}
+
+		[data-theme="dark"] {
+			--bg: #111110;
+			--bg2: #1c1c1a;
+			--bg3: #252523;
+			--text: #f5f5f0;
+			--text2: #a8a8a2;
+			--text3: #6b6b68;
+			--border: rgba(255, 255, 255, 0.08);
+			--border2: rgba(255, 255, 255, 0.14);
+			--accent: #3b82f6;
+			--accent-bg: #1e3a5f;
+			--accent-text: #93c5fd;
+			--green: #4ade80;
+			--red: #f87171;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+			background: var(--bg);
+			color: var(--text);
+			min-height: 100vh;
+			font-size: 15px;
+			line-height: 1.5;
+			transition: background 0.2s, color 0.2s;
+		}
+
+		.container {
+			max-width: 480px;
+			margin: 0 auto;
+			padding: 0 16px;
+		}
+
+		/* TOPBAR */
+		.topbar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 14px 16px;
+			border-bottom: 0.5px solid var(--border);
+			position: sticky;
+			top: 0;
+			background: var(--bg);
+			z-index: 10;
+		}
+
+		.logo {
+			font-weight: 600;
+			font-size: 16px;
+			letter-spacing: -0.3px;
+		}
+
+		.logo span {
+			color: var(--accent);
+		}
+
+		.topbar-right {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.lang-btn {
+			padding: 5px 9px;
+			border: 0.5px solid var(--border2);
+			border-radius: 6px;
+			background: transparent;
+			color: var(--text2);
+			font-size: 12px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.15s;
+		}
+
+		.lang-btn.active {
+			background: var(--accent-bg);
+			color: var(--accent-text);
+			border-color: var(--accent);
+		}
+
+		.theme-btn {
+			width: 34px;
+			height: 34px;
+			border: 0.5px solid var(--border2);
+			border-radius: 8px;
+			background: transparent;
+			color: var(--text2);
+			font-size: 16px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.15s;
+		}
+
+		.theme-btn:hover {
+			background: var(--bg2);
+		}
+
+		/* HERO RATES */
+		.hero {
+			padding: 20px 0 8px;
+		}
+
+		.hero-label {
+			font-size: 11px;
+			color: var(--text3);
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			margin-bottom: 10px;
+		}
+
+		.quick-rates {
+			display: flex;
+			gap: 8px;
+			overflow-x: auto;
+			padding-bottom: 4px;
+			scrollbar-width: none;
+		}
+
+		.quick-rates::-webkit-scrollbar {
+			display: none;
+		}
+
+		.rate-chip {
+			flex-shrink: 0;
+			background: var(--bg2);
+			border: 0.5px solid var(--border);
+			border-radius: 10px;
+			padding: 10px 14px;
+			cursor: pointer;
+			transition: all 0.15s;
+			min-width: 90px;
+		}
+
+		.rate-chip:hover,
+		.rate-chip.active {
+			background: var(--accent-bg);
+			border-color: var(--accent);
+		}
+
+		.rate-chip .code {
+			font-size: 11px;
+			color: var(--text3);
+			font-weight: 500;
+		}
+
+		.rate-chip .val {
+			font-size: 15px;
+			font-weight: 600;
+			color: var(--text);
+			margin-top: 2px;
+		}
+
+		.rate-chip .diff {
+			font-size: 11px;
+			margin-top: 1px;
+		}
+
+		.diff-up {
+			color: var(--green);
+		}
+
+		.diff-dn {
+			color: var(--red);
+		}
+
+		/* CONVERTER */
+		.converter {
+			margin: 20px 0;
+		}
+
+		.field-label {
+			font-size: 12px;
+			color: var(--text3);
+			margin-bottom: 6px;
+			font-weight: 500;
+		}
+
+		.field-row {
+			display: grid;
+			grid-template-columns: 1fr 110px;
+			gap: 8px;
+			margin-bottom: 8px;
+		}
+
+		input[type=number] {
+			width: 100%;
+			padding: 14px 14px;
+			font-size: 22px;
+			font-weight: 600;
+			border: 1.5px solid var(--border2);
+			border-radius: var(--radius);
+			background: var(--bg2);
+			color: var(--text);
+			outline: none;
+			-webkit-appearance: none;
+			transition: border-color 0.15s;
+		}
+
+		input[type=number]:focus {
+			border-color: var(--accent);
+			background: var(--bg);
+		}
+
+		input[type=number]::-webkit-inner-spin-button {
+			display: none;
+		}
+
+		select {
+			width: 100%;
+			padding: 14px 10px;
+			font-size: 15px;
+			font-weight: 600;
+			border: 1.5px solid var(--border2);
+			border-radius: var(--radius);
+			background: var(--bg2);
+			color: var(--text);
+			outline: none;
+			cursor: pointer;
+			-webkit-appearance: none;
+			appearance: none;
+			text-align: center;
+			transition: border-color 0.15s;
+		}
+
+		select:focus {
+			border-color: var(--accent);
+		}
+
+		.swap-row {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 4px 0;
+		}
+
+		.swap-btn {
+			width: 40px;
+			height: 40px;
+			border: 1.5px solid var(--border2);
+			border-radius: 50%;
+			background: var(--bg);
+			color: var(--text2);
+			font-size: 18px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.15s;
+			z-index: 1;
+		}
+
+		.swap-btn:active {
+			transform: rotate(180deg) scale(0.92);
+		}
+
+		.result-box {
+			background: var(--bg2);
+			border: 1.5px solid var(--border);
+			border-radius: var(--radius);
+			padding: 14px;
+			display: grid;
+			grid-template-columns: 1fr 110px;
+			gap: 8px;
+			align-items: center;
+		}
+
+		.result-amount {
+			font-size: 26px;
+			font-weight: 700;
+			color: var(--text);
+			letter-spacing: -0.5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.result-cur {
+			font-size: 15px;
+			font-weight: 600;
+			color: var(--text2);
+			text-align: center;
+			padding: 14px 10px;
+			background: var(--bg3);
+			border-radius: 8px;
+		}
+
+		.rate-info {
+			font-size: 12px;
+			color: var(--text3);
+			margin-top: 8px;
+			text-align: center;
+			padding: 6px;
+		}
+
+		/* CHART */
+		.chart-section {
+			margin: 8px 0 24px;
+		}
+
+		.chart-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 12px;
+		}
+
+		.chart-title {
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--text);
+		}
+
+		.chart-sub {
+			font-size: 11px;
+			color: var(--text3);
+			margin-top: 1px;
+		}
+
+		.period-pills {
+			display: flex;
+			gap: 4px;
+		}
+
+		.period-pill {
+			padding: 5px 12px;
+			border: 0.5px solid var(--border2);
+			border-radius: 20px;
+			background: transparent;
+			color: var(--text2);
+			font-size: 12px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.15s;
+		}
+
+		.period-pill.active {
+			background: var(--accent-bg);
+			color: var(--accent-text);
+			border-color: var(--accent);
+		}
+
+		.chart-wrap {
+			position: relative;
+			width: 100%;
+			height: 160px;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 8px;
+			margin-top: 10px;
+		}
+
+		.stat-item {
+			background: var(--bg2);
+			border-radius: 8px;
+			padding: 10px 12px;
+			text-align: center;
+		}
+
+		.stat-label {
+			font-size: 11px;
+			color: var(--text3);
+			margin-bottom: 3px;
+		}
+
+		.stat-val {
+			font-size: 14px;
+			font-weight: 600;
+			color: var(--text);
+		}
+
+		/* FOOTER */
+		.footer {
+			border-top: 0.5px solid var(--border);
+			padding: 16px 0 24px;
+			text-align: center;
+			font-size: 11px;
+			color: var(--text3);
+			line-height: 1.6;
+		}
+
+		.footer a {
+			color: var(--text3);
+			text-decoration: none;
+		}
+
+		.loading {
+			opacity: 0.4;
+		}
+
+		.status-line {
+			font-size: 12px;
+			color: var(--text3);
+			min-height: 16px;
+			margin-bottom: 6px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="topbar">
+		<div class="logo">Kurs<span>.</span>uz</div>
+		<div class="topbar-right">
+			<button class="lang-btn active" data-lang="uz" onclick="setLang('uz')">UZ</button>
+			<button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+			<button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+			<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Tema">🌙</button>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="hero">
+			<div class="hero-label" id="heroLabel">Bugungi kurslar — CBU rasmiy</div>
+			<div class="quick-rates" id="quickRates">
+				<div class="rate-chip loading">
+					<div class="code">USD</div>
+					<div class="val">...</div>
+				</div>
+				<div class="rate-chip loading">
+					<div class="code">EUR</div>
+					<div class="val">...</div>
+				</div>
+				<div class="rate-chip loading">
+					<div class="code">RUB</div>
+					<div class="val">...</div>
+				</div>
+				<div class="rate-chip loading">
+					<div class="code">GBP</div>
+					<div class="val">...</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="converter">
+			<div class="field-label" id="amountLabel">Miqdor</div>
+			<div class="field-row">
+				<input type="number" id="amount" value="100" inputmode="decimal" min="0">
+				<select id="fromCur" onchange="onCurChange()">
+					<option value="UZS">UZS</option>
+					<option value="USD" selected>USD</option>
+					<option value="EUR">EUR</option>
+					<option value="RUB">RUB</option>
+					<option value="GBP">GBP</option>
+					<option value="JPY">JPY</option>
+					<option value="CNY">CNY</option>
+					<option value="KZT">KZT</option>
+					<option value="TRY">TRY</option>
+					<option value="CHF">CHF</option>
+				</select>
+			</div>
+
+			<div class="swap-row">
+				<button class="swap-btn" onclick="swapCur()" aria-label="Almashtirish">⇅</button>
+			</div>
+
+			<div class="result-box">
+				<div class="result-amount" id="resultAmount">—</div>
+				<div class="result-cur" id="resultCur">UZS</div>
+			</div>
+
+			<select id="toCur" style="margin-top:8px; height:48px;" onchange="onCurChange()">
+				<option value="UZS" selected>UZS — O'zbek so'mi</option>
+				<option value="USD">USD — Dollar</option>
+				<option value="EUR">EUR — Euro</option>
+				<option value="RUB">RUB — Rubl</option>
+				<option value="GBP">GBP — Funt</option>
+				<option value="JPY">JPY — Yen</option>
+				<option value="CNY">CNY — Yuan</option>
+				<option value="KZT">KZT — Tenge</option>
+				<option value="TRY">TRY — Lira</option>
+				<option value="CHF">CHF — Frank</option>
+			</select>
+
+			<div class="rate-info" id="rateInfo">Yuklanmoqda...</div>
+		</div>
+
+		<div class="chart-section">
+			<div class="chart-header">
+				<div>
+					<div class="chart-title" id="chartTitle">USD → UZS grafik</div>
+					<div class="chart-sub" id="chartSub">So'nggi 30 kun</div>
+				</div>
+				<div class="period-pills">
+					<button class="period-pill active" id="pill30" onclick="setPeriod(30)">30 kun</button>
+					<button class="period-pill" id="pill90" onclick="setPeriod(90)">90 kun</button>
+				</div>
+			</div>
+			<div class="status-line" id="chartStatus"></div>
+			<div class="chart-wrap">
+				<canvas id="chart" role="img" aria-label="Valyuta kursi grafigi"></canvas>
+			</div>
+			<div class="stats-grid" id="statsGrid"></div>
+		</div>
+
+	</div>
+
+	<div class="footer">
+		<div class="container">
+			<div id="footerSource">Manba: O'zbekiston Respublikasi Markaziy banki (cbu.uz)</div>
+			<div style="margin-top:4px;" id="footerUpdate">Har kuni yangilanadi</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+	<script>
+		const T={
+			uz: {
+				heroLabel: 'Bugungi kurslar — CBU rasmiy',
+				amountLabel: 'Miqdor',
+				chartSub30: "So'nggi 30 kun",
+				chartSub90: "So'nggi 90 kun",
+				loading: 'Yuklanmoqda...',
+				source: "Manba: O'zbekiston Respublikasi Markaziy banki (cbu.uz)",
+				update: 'Har kuni yangilanadi',
+				noData: "Ma'lumot topilmadi",
+				error: 'Xato yuz berdi',
+				min: 'Min',avg: "O'rtacha",change: "O'zgarish",
+			},
+			ru: {
+				heroLabel: 'Курсы сегодня — Официальный ЦБ',
+				amountLabel: 'Сумма',
+				chartSub30: 'Последние 30 дней',
+				chartSub90: 'Последние 90 дней',
+				loading: 'Загрузка...',
+				source: 'Источник: Центральный банк Узбекистана (cbu.uz)',
+				update: 'Обновляется ежедневно',
+				noData: 'Нет данных',
+				error: 'Произошла ошибка',
+				min: 'Мин',avg: 'Среднее',change: 'Изменение',
+			},
+			en: {
+				heroLabel: "Today's rates — CBU official",
+				amountLabel: 'Amount',
+				chartSub30: 'Last 30 days',
+				chartSub90: 'Last 90 days',
+				loading: 'Loading...',
+				source: 'Source: Central Bank of Uzbekistan (cbu.uz)',
+				update: 'Updated daily',
+				noData: 'No data',
+				error: 'An error occurred',
+				min: 'Min',avg: 'Average',change: 'Change',
+			}
+		}
+
+		let lang='uz'
+		let theme='light'
+		let period=30
+		let cbuRates={}
+		let fxRates={}
+		let chartInstance=null
+
+		const CBU_PROXY='/api/cbu'
+		const FX_BASE='https://api.frankfurter.app'
+
+		function t(key) {return T[lang][key]||T.uz[key]}
+
+		function setLang(l) {
+			lang=l
+			document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active',b.dataset.lang===l))
+			document.getElementById('heroLabel').textContent=t('heroLabel')
+			document.getElementById('amountLabel').textContent=t('amountLabel')
+			document.getElementById('footerSource').textContent=t('source')
+			document.getElementById('footerUpdate').textContent=t('update')
+			document.getElementById('chartSub').textContent=period===30? t('chartSub30'):t('chartSub90')
+			updateRateInfo()
+			updateStats()
+		}
+
+		function toggleTheme() {
+			theme=theme==='light'? 'dark':'light'
+			document.documentElement.setAttribute('data-theme',theme==='dark'? 'dark':'')
+			document.getElementById('themeBtn').textContent=theme==='dark'? '☀️':'🌙'
+			localStorage.setItem('theme',theme)
+		}
+
+		function setPeriod(p) {
+			period=p
+			document.getElementById('pill30').classList.toggle('active',p===30)
+			document.getElementById('pill90').classList.toggle('active',p===90)
+			document.getElementById('chartSub').textContent=t(`chartSub${p}`)
+			loadChart()
+		}
+
+		async function loadCBU() {
+			try {
+				const r=await fetch(`${CBU_PROXY}`)
+				const data=await r.json()
+				data.forEach(item => {
+					cbuRates[item.Ccy]={rate: parseFloat(item.Rate)/parseInt(item.Nominal),diff: parseFloat(item.Diff)}
+				})
+				cbuRates['UZS']={rate: 1,diff: 0}
+				renderQuickRates()
+				convert()
+			} catch(e) {
+				document.getElementById('rateInfo').textContent=t('error')
+			}
+		}
+
+		function renderQuickRates() {
+			const chips=['USD','EUR','RUB','GBP']
+			const el=document.getElementById('quickRates')
+			el.innerHTML=chips.map(code => {
+				const r=cbuRates[code]
+				if(!r) return ''
+				const val=r.rate>=1000? Math.round(r.rate).toLocaleString():r.rate.toFixed(2)
+				const diffSign=r.diff>=0? '+':''
+				const diffClass=r.diff>=0? 'diff-up':'diff-dn'
+				return `<div class="rate-chip" onclick="setFromChip('${code}')">
+      <div class="code">${code}/UZS</div>
+      <div class="val">${val}</div>
+      <div class="diff ${diffClass}">${diffSign}${r.diff.toFixed(2)}</div>
+    </div>`
+			}).join('')
+		}
+
+		function setFromChip(code) {
+			document.getElementById('fromCur').value=code
+			document.getElementById('toCur').value='UZS'
+			convert()
+			loadChart()
+		}
+
+		function getRate(from,to) {
+			if(from===to) return 1
+			const fromUZS=cbuRates[from]?.rate
+			const toUZS=cbuRates[to]?.rate
+			if(fromUZS&&toUZS) return fromUZS/toUZS
+			const fromFX=fxRates[from]
+			const toFX=fxRates[to]
+			if(fromFX&&toFX) return fromFX/toFX
+			return null
+		}
+
+		function convert() {
+			const amount=parseFloat(document.getElementById('amount').value)||0
+			const from=document.getElementById('fromCur').value
+			const to=document.getElementById('toCur').value
+			const rate=getRate(from,to)
+			document.getElementById('resultCur').textContent=to
+			if(rate===null) {
+				document.getElementById('resultAmount').textContent='—'
+				document.getElementById('rateInfo').textContent=t('loading')
+				return
+			}
+			const result=amount*rate
+			const dp=result>1000? 0:result>1? 2:4
+			document.getElementById('resultAmount').textContent=result.toLocaleString('ru-RU',{maximumFractionDigits: dp})
+			updateRateInfo(from,to,rate)
+			document.getElementById('chartTitle').textContent=`${from} → ${to}`
+			loadChart()
+		}
+
+		function updateRateInfo(from,to,rate) {
+			if(!from) {
+				from=document.getElementById('fromCur').value
+				to=document.getElementById('toCur').value
+				rate=getRate(from,to)
+			}
+			if(!rate) return
+			const dp=rate>100? 2:rate>1? 4:6
+			document.getElementById('rateInfo').textContent=`1 ${from} = ${rate.toLocaleString('ru-RU',{maximumFractionDigits: dp})} ${to}`
+		}
+
+		function onCurChange() {convert()}
+
+		function swapCur() {
+			const from=document.getElementById('fromCur')
+			const to=document.getElementById('toCur')
+			const tmp=from.value
+			from.value=to.value
+			to.value=tmp
+			convert()
+		}
+
+		async function loadChart() {
+			const from=document.getElementById('fromCur').value
+			const to=document.getElementById('toCur').value
+			if(from===to) return
+
+			const statusEl=document.getElementById('chartStatus')
+			statusEl.textContent=t('loading')
+
+			const end=new Date()
+			const start=new Date()
+			start.setDate(start.getDate()-period)
+			const fmt=d => d.toISOString().split('T')[0]
+
+			try {
+				let dates=[],vals=[]
+
+				if(from==='UZS'||to==='UZS') {
+					const cur=from==='UZS'? to:from
+					const promises=[]
+					const allDates=[]
+					for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)) {
+						allDates.push(new Date(d))
+					}
+					const step=Math.max(1,Math.floor(allDates.length/30))
+					const sampledDates=allDates.filter((_,i) => i%step===0)
+					for(const d of sampledDates) {
+						promises.push(
+							fetch(`${CBU_PROXY}?cur=${cur}&date=${fmt(d)}`)
+								.then(r => r.json())
+								.then(data => ({date: fmt(d),rate: data[0]? parseFloat(data[0].Rate)/parseInt(data[0].Nominal):null}))
+								.catch(() => ({date: fmt(d),rate: null}))
+						)
+					}
+					const results=await Promise.all(promises)
+					results.sort((a,b) => a.date.localeCompare(b.date))
+					dates=results.map(r => r.date)
+					vals=results.map(r => from==='UZS'&&r.rate? 1/r.rate:r.rate)
+				} else {
+					const r=await fetch(`${FX_BASE}/${fmt(start)}..${fmt(end)}?from=${from}&to=${to}`)
+					const d=await r.json()
+					if(!d.rates) {statusEl.textContent=t('noData'); return }
+					dates=Object.keys(d.rates).sort()
+					vals=dates.map(dt => d.rates[dt][to]??null)
+				}
+
+				statusEl.textContent=''
+				renderChart(dates,vals,from,to)
+				updateStatsFromData(vals,to)
+			} catch(e) {
+				statusEl.textContent=t('error')
+			}
+		}
+
+		function renderChart(dates,vals,from,to) {
+			const isDark=theme==='dark'
+			const gridColor=isDark? 'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)'
+			const tickColor=isDark? '#6b6b68':'#9b9b97'
+			const validVals=vals.filter(v => v!==null)
+			const dp=validVals.length&&Math.max(...validVals)>100? 0:4
+			const labels=dates.map(d => {const p=d.split('-'); return p[2]+'/'+p[1]})
+
+			const ctx=document.getElementById('chart').getContext('2d')
+			if(chartInstance) chartInstance.destroy()
+			chartInstance=new Chart(ctx,{
+				type: 'line',
+				data: {
+					labels,
+					datasets: [{
+						data: vals,
+						borderColor: '#2563eb',
+						backgroundColor: isDark? 'rgba(37,99,235,0.08)':'rgba(37,99,235,0.06)',
+						borderWidth: 2,
+						pointRadius: 0,
+						pointHoverRadius: 4,
+						pointHoverBackgroundColor: '#2563eb',
+						fill: true,
+						tension: 0.3,
+						spanGaps: true
+					}]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					plugins: {
+						legend: {display: false},
+						tooltip: {
+							mode: 'index',intersect: false,
+							callbacks: {label: c => c.parsed.y?.toFixed(dp)+' '+to}
+						}
+					},
+					scales: {
+						x: {
+							ticks: {color: tickColor,font: {size: 10},maxTicksLimit: 6,maxRotation: 0},
+							grid: {display: false},
+							border: {color: gridColor}
+						},
+						y: {
+							position: 'right',
+							ticks: {color: tickColor,font: {size: 10},maxTicksLimit: 4,callback: v => v?.toFixed(dp)},
+							grid: {color: gridColor},
+							border: {display: false}
+						}
+					},
+					interaction: {mode: 'nearest',axis: 'x',intersect: false}
+				}
+			})
+		}
+
+		function updateStatsFromData(vals,to) {
+			const valid=vals.filter(v => v!==null)
+			if(!valid.length) return
+			updateStats(valid,to)
+		}
+
+		function updateStats(valid,to) {
+			if(!valid) {
+				document.getElementById('statsGrid').innerHTML=''
+				return
+			}
+			const mn=Math.min(...valid)
+			const mx=Math.max(...valid)
+			const avg=valid.reduce((a,b) => a+b,0)/valid.length
+			const chg=valid.length>1? (valid[valid.length-1]-valid[0])/valid[0]*100:0
+			const dp=mx>100? 0:4
+			document.getElementById('statsGrid').innerHTML=`
+    <div class="stat-item"><div class="stat-label">${t('min')}</div><div class="stat-val">${mn.toFixed(dp)}</div></div>
+    <div class="stat-item"><div class="stat-label">${t('avg')}</div><div class="stat-val">${avg.toFixed(dp)}</div></div>
+    <div class="stat-item"><div class="stat-label">${t('change')}</div><div class="stat-val" style="color:${chg>=0? 'var(--green)':'var(--red)'}">${chg>=0? '+':''}${chg.toFixed(1)}%</div></div>
+  `
+		}
+
+		async function loadFX() {
+			try {
+				const r=await fetch(`${FX_BASE}/latest?from=USD`)
+				const d=await r.json()
+				fxRates=d.rates
+				fxRates['USD']=1
+			} catch(e) {}
+		}
+
+		document.getElementById('amount').addEventListener('input',convert);
+
+		(function init() {
+			const saved=localStorage.getItem('theme')
+			if(saved==='dark'||(!saved&&window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+				theme='dark'
+				document.documentElement.setAttribute('data-theme','dark')
+				document.getElementById('themeBtn').textContent='☀️'
+			}
+			Promise.all([loadCBU(),loadFX()]).then(() => convert())
+			loadChart()
+		})();
+	</script>
+</body>
+
+</html>
