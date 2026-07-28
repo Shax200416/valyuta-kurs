@@ -433,16 +433,53 @@
 		/* FOOTER */
 		.footer {
 			border-top: 0.5px solid var(--border);
-			padding: 16px 0 24px;
+			padding: 20px 0 32px;
+			font-size: 12px;
+			color: var(--text3);
+			line-height: 1.8;
+		}
+
+		.footer-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+			margin-bottom: 16px;
+		}
+
+		.footer-block-title {
+			font-size: 11px;
+			font-weight: 600;
+			color: var(--text2);
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin-bottom: 6px;
+		}
+
+		.footer-block p {
+			margin: 0;
+			color: var(--text3);
+			font-size: 12px;
+		}
+
+		.footer-divider {
+			border: none;
+			border-top: 0.5px solid var(--border);
+			margin: 16px 0;
+		}
+
+		.footer-bottom {
 			text-align: center;
 			font-size: 11px;
 			color: var(--text3);
-			line-height: 1.6;
 		}
 
 		.footer a {
-			color: var(--text3);
+			color: var(--accent);
 			text-decoration: none;
+		}
+
+		.footer a:hover {
+			text-decoration: underline;
 		}
 
 		.loading {
@@ -562,8 +599,26 @@
 
 	<div class="footer">
 		<div class="container">
-			<div id="footerSource">Manba: O'zbekiston Respublikasi Markaziy banki (cbu.uz)</div>
-			<div style="margin-top:4px;" id="footerUpdate">Har kuni yangilanadi</div>
+			<div class="footer-grid">
+				<div class="footer-block">
+					<div class="footer-block-title" id="footerSrcTitle">Manba</div>
+					<p id="footerSource"><a href="https://cbu.uz" target="_blank" rel="noopener">cbu.uz</a> — O'zbekiston
+						Respublikasi Markaziy banki</p>
+					<p style="margin-top:4px;"><a href="https://frankfurter.app" target="_blank"
+							rel="noopener">frankfurter.app</a> — Xalqaro valyuta kurslari</p>
+				</div>
+				<div class="footer-block">
+					<div class="footer-block-title" id="footerTrustTitle">Ishonchlilik</div>
+					<p id="footerTrust">Kurslar har kuni CBU rasmiy manbasidan avtomatik yangilanadi. Tijorat maqsadlarida
+						foydalanishdan oldin rasmiy kursni tekshiring.</p>
+				</div>
+			</div>
+			<hr class="footer-divider">
+			<div class="footer-bottom">
+				<div><span id="footerContactLabel">Aloqa:</span> <a
+						href="mailto:shaxruh6114@gmail.com">shaxruh6114@gmail.com</a></div>
+				<div style="margin-top:4px;" id="footerUpdate">© 2026 Kurs.uz — Har kuni yangilanadi</div>
+			</div>
 		</div>
 	</div>
 
@@ -577,9 +632,21 @@
 				RUB: "Rossiya rubli 🇷🇺",
 				GBP: "Britaniya funti 🇬🇧",
 				KGS: "Qirg'iz so'mi 🇰🇬",
-				JPY: "Yaponiya iyenasi 🇯🇵",
-				CNY: "Xitoy yuani 🇨🇳",
 				KZT: "Qozog'iston tengesi 🇰🇿",
+				TJS: "Tojikiston somoniysi 🇹🇯",
+				TMT: "Turkmaniston manati 🇹🇲",
+				AZN: "Ozarbayjon manati 🇦🇿",
+				AMD: "Armaniston drami 🇦🇲",
+				GEL: "Gruziya larisi 🇬🇪",
+				BYN: "Belarus rubli 🇧🇾",
+				UAH: "Ukraina grivnasi 🇺🇦",
+				KRW: "Janubiy Koreya voni 🇰🇷",
+				JPY: "Yaponiya iyenasi 🇯🇵",
+				AED: "BAA dirhami 🇦🇪",
+				SAR: "Saudiya riyoli 🇸🇦",
+				EGP: "Misr funti 🇪🇬",
+				AUD: "Avstraliya dollari 🇦🇺",
+				CNY: "Xitoy yuani 🇨🇳",
 				TRY: "Turk lirasi 🇹🇷",
 				CHF: "Shveytsariya franki 🇨🇭",
 			},
@@ -590,9 +657,21 @@
 				RUB: "Российский рубль 🇷🇺",
 				GBP: "Британский фунт 🇬🇧",
 				KGS: "Кыргызский сом 🇰🇬",
-				JPY: "Японская иена 🇯🇵",
-				CNY: "Китайский юань 🇨🇳",
 				KZT: "Казахстанский тенге 🇰🇿",
+				TJS: "Таджикский сомони 🇹🇯",
+				TMT: "Туркменский манат 🇹🇲",
+				AZN: "Азербайджанский манат 🇦🇿",
+				AMD: "Армянский драм 🇦🇲",
+				GEL: "Грузинский лари 🇬🇪",
+				BYN: "Белорусский рубль 🇧🇾",
+				UAH: "Украинская гривна 🇺🇦",
+				KRW: "Южнокорейская вона 🇰🇷",
+				JPY: "Японская иена 🇯🇵",
+				AED: "Дирхам ОАЭ 🇦🇪",
+				SAR: "Саудовский риял 🇸🇦",
+				EGP: "Египетский фунт 🇪🇬",
+				AUD: "Австралийский доллар 🇦🇺",
+				CNY: "Китайский юань 🇨🇳",
 				TRY: "Турецкая лира 🇹🇷",
 				CHF: "Швейцарский франк 🇨🇭",
 			},
@@ -603,9 +682,21 @@
 				RUB: "Russian Ruble 🇷🇺",
 				GBP: "British Pound 🇬🇧",
 				KGS: "Kyrgyz Som 🇰🇬",
-				JPY: "Japanese Yen 🇯🇵",
-				CNY: "Chinese Yuan 🇨🇳",
 				KZT: "Kazakhstani Tenge 🇰🇿",
+				TJS: "Tajikistani Somoni 🇹🇯",
+				TMT: "Turkmenistani Manat 🇹🇲",
+				AZN: "Azerbaijani Manat 🇦🇿",
+				AMD: "Armenian Dram 🇦🇲",
+				GEL: "Georgian Lari 🇬🇪",
+				BYN: "Belarusian Ruble 🇧🇾",
+				UAH: "Ukrainian Hryvnia 🇺🇦",
+				KRW: "South Korean Won 🇰🇷",
+				JPY: "Japanese Yen 🇯🇵",
+				AED: "UAE Dirham 🇦🇪",
+				SAR: "Saudi Riyal 🇸🇦",
+				EGP: "Egyptian Pound 🇪🇬",
+				AUD: "Australian Dollar 🇦🇺",
+				CNY: "Chinese Yuan 🇨🇳",
 				TRY: "Turkish Lira 🇹🇷",
 				CHF: "Swiss Franc 🇨🇭",
 			}
@@ -620,10 +711,16 @@
 				chartSub90: "So'nggi 90 kun",
 				loading: 'Yuklanmoqda...',
 				source: "Manba: O'zbekiston Respublikasi Markaziy banki (cbu.uz)",
-				update: 'Har kuni yangilanadi',
+				update: "© 2026 Kurs.uz — Har kuni yangilanadi",
 				noData: "Ma'lumot topilmadi",
 				error: 'Xato yuz berdi',
 				min: 'Min', avg: "O'rtacha", change: "O'zgarish",
+				footerSrcTitle: 'Manba',
+				footerSrc1: "— O'zbekiston Respublikasi Markaziy banki",
+				footerSrc2: "— Xalqaro valyuta kurslari",
+				footerTrustTitle: 'Ishonchlilik',
+				footerTrust: "Kurslar har kuni CBU rasmiy manbasidan avtomatik yangilanadi. Tijorat maqsadlarida foydalanishdan oldin rasmiy kursni tekshiring.",
+				footerContact: 'Aloqa',
 			},
 			ru: {
 				heroLabel: 'Курсы сегодня — Официальный ЦБ',
@@ -633,10 +730,16 @@
 				chartSub90: 'Последние 90 дней',
 				loading: 'Загрузка...',
 				source: 'Источник: Центральный банк Узбекистана (cbu.uz)',
-				update: 'Обновляется ежедневно',
+				update: '© 2026 Kurs.uz — Обновляется ежедневно',
 				noData: 'Нет данных',
 				error: 'Произошла ошибка',
 				min: 'Мин', avg: 'Среднее', change: 'Изменение',
+				footerSrcTitle: 'Источник',
+				footerSrc1: '— Центральный банк Узбекистана',
+				footerSrc2: '— Международные валютные курсы',
+				footerTrustTitle: 'Надёжность',
+				footerTrust: 'Курсы обновляются ежедневно автоматически из официального источника ЦБ. Перед коммерческим использованием проверяйте официальный курс.',
+				footerContact: 'Контакт',
 			},
 			en: {
 				heroLabel: "Today's rates — CBU official",
@@ -646,10 +749,16 @@
 				chartSub90: 'Last 90 days',
 				loading: 'Loading...',
 				source: 'Source: Central Bank of Uzbekistan (cbu.uz)',
-				update: 'Updated daily',
+				update: '© 2026 Kurs.uz — Updated daily',
 				noData: 'No data',
 				error: 'An error occurred',
 				min: 'Min', avg: 'Average', change: 'Change',
+				footerSrcTitle: 'Source',
+				footerSrc1: '— Central Bank of Uzbekistan',
+				footerSrc2: '— International exchange rates',
+				footerTrustTitle: 'Reliability',
+				footerTrust: 'Rates are updated daily automatically from the official CBU source. Verify official rates before commercial use.',
+				footerContact: 'Contact',
 			}
 		}
 
@@ -666,12 +775,16 @@
 		function t(key) { return T[lang][key] || T.uz[key] }
 
 		function updateCurrencyOptions() {
-			const codes = ['UZS', 'USD', 'EUR', 'RUB', 'GBP', 'KGS', 'JPY', 'CNY', 'KZT', 'TRY', 'CHF']
+			const codes = ['UZS', 'USD', 'EUR', 'RUB', 'GBP', 'KGS', 'KZT', 'TJS', 'TMT', 'AZN', 'AMD', 'GEL', 'BYN', 'UAH', 'KRW', 'JPY', 'AED', 'SAR', 'EGP', 'AUD', 'CNY', 'TRY', 'CHF']
+			const fromCur = document.getElementById('fromCur')
 			const toCur = document.getElementById('toCur')
+			const savedFrom = fromCur.value
 			const savedTo = toCur.value
-			toCur.innerHTML = codes.map(c =>
-				`<option value="${c}"${c === savedTo ? ' selected' : ''}>${c} — ${CURRENCIES[lang][c]}</option>`
-			).join('')
+			const opts = codes.map(c => `<option value="${c}">${c} — ${CURRENCIES[lang][c]}</option>`).join('')
+			fromCur.innerHTML = opts
+			toCur.innerHTML = opts
+			fromCur.value = savedFrom || 'USD'
+			toCur.value = savedTo || 'UZS'
 		}
 
 		function setLang(l) {
@@ -679,9 +792,12 @@
 			document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l))
 			document.getElementById('heroLabel').textContent = t('heroLabel')
 			document.getElementById('amountLabel').textContent = t('amountLabel')
-			document.getElementById('footerSource').textContent = t('source')
 			document.getElementById('footerUpdate').textContent = t('update')
 			document.getElementById('chartSub').textContent = period === 30 ? t('chartSub30') : t('chartSub90')
+			document.getElementById('footerSrcTitle').textContent = t('footerSrcTitle')
+			document.getElementById('footerTrustTitle').textContent = t('footerTrustTitle')
+			document.getElementById('footerTrust').textContent = t('footerTrust')
+			document.getElementById('footerContactLabel').textContent = t('footerContact') + ':'
 			updateCurrencyOptions()
 			updateRateInfo()
 			updateStats()
