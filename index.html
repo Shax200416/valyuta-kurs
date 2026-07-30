@@ -602,9 +602,9 @@
 			<div class="footer-grid">
 				<div class="footer-block">
 					<div class="footer-block-title" id="footerSrcTitle">Manba</div>
-					<p id="footerSource"><a href="https://cbu.uz" target="_blank" rel="noopener">cbu.uz</a> — O'zbekiston
+					<p id="footerSrc1"><a href="https://cbu.uz" target="_blank" rel="noopener">cbu.uz</a> — O'zbekiston
 						Respublikasi Markaziy banki</p>
-					<p style="margin-top:4px;"><a href="https://frankfurter.app" target="_blank"
+					<p style="margin-top:4px;" id="footerSrc2"><a href="https://frankfurter.app" target="_blank"
 							rel="noopener">frankfurter.app</a> — Xalqaro valyuta kurslari</p>
 				</div>
 				<div class="footer-block">
@@ -795,6 +795,8 @@
 			document.getElementById('footerUpdate').textContent = t('update')
 			document.getElementById('chartSub').textContent = period === 30 ? t('chartSub30') : t('chartSub90')
 			document.getElementById('footerSrcTitle').textContent = t('footerSrcTitle')
+			document.getElementById('footerSrc1').innerHTML = `<a href="https://cbu.uz" target="_blank" rel="noopener">cbu.uz</a> — ${t('footerSrc1')}`
+			document.getElementById('footerSrc2').innerHTML = `<a href="https://frankfurter.app" target="_blank" rel="noopener">frankfurter.app</a> — ${t('footerSrc2')}`
 			document.getElementById('footerTrustTitle').textContent = t('footerTrustTitle')
 			document.getElementById('footerTrust').textContent = t('footerTrust')
 			document.getElementById('footerContactLabel').textContent = t('footerContact') + ':'
