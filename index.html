@@ -931,70 +931,43 @@
 				if (from === 'UZS' || to === 'UZS') {
 					const cur = from === 'UZS' ? to : from
 
-					// CBU tarixiy endpoint — bir so'rovda ko'p kun
-					// Har oyni alohida so'raymiz
-					const months = []
+					// Har 3 kunda bitta nuqta — 10-30 so'rov
+					const points = []
+					const step = Math.max(1, Math.floor(period / 20))
 					const d = new Date(start)
 					while (d <= end) {
-						const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-						if (!months.includes(key)) months.push(key)
-						d.setMonth(d.getMonth() + 1)
+						points.push(fmt(new Date(d)))
+						d.setDate(d.getDate() + step)
 					}
-					const currentKey = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}`
-					if (!months.includes(currentKey)) months.push(currentKey)
+					// Oxirgi kun har doim bo'lsin
+					const todayFmt = fmt(end)
+					if (!points.includes(todayFmt)) points.push(todayFmt)
 
-					const allData = {}
-					await Promise.all(months.map(async month => {
-						const [y, m] = month.split('-')
-						try {
-							const r = await fetch(`${CBU_PROXY}?cur=${cur}&month=${m}&year=${y}`)
-							const data = await r.json()
-							if (Array.isArray(data)) {
-								data.forEach(item => {
-									if (item.Date && item.Rate) {
-										const parts = item.Date.split('.')
-										const dateKey = `${parts[2]}-${parts[1]}-${parts[0]}`
-										allData[dateKey] = parseFloat(item.Rate) / parseInt(item.Nominal || 1)
-									}
-								})
-							}
-						} catch (e) { }
-					}))
+					const results = await Promise.all(points.map(dateStr =>
+						fetch(`${CBU_PROXY}?cur=${cur}&date=${dateStr}`)
+							.then(r => r.json())
+							.then(data => {
+								if (!data[0]) return { date: dateStr, rate: null }
+								const rate = parseFloat(data[0].Rate) / parseInt(data[0].Nominal || 1)
+								// CBU qaytargan haqiqiy sanani ishlatamiz
+								const parts = data[0].Date.split('.')
+								const realDate = `${parts[2]}-${parts[1]}-${parts[0]}`
+								return { date: realDate, rate }
+							})
+							.catch(() => ({ date: dateStr, rate: null }))
+					))
 
-					// Faqat kerakli oraliq
-					const result = []
-					const cur2 = new Date(start)
-					while (cur2 <= end) {
-						const key = fmt(cur2)
-						if (allData[key] !== undefined) {
-							result.push({ date: key, rate: allData[key] })
-						}
-						cur2.setDate(cur2.getDate() + 1)
-					}
+					// Takroriy sanalarni olib tashlash
+					const seen = new Set()
+					const unique = results.filter(r => {
+						if (seen.has(r.date)) return false
+						seen.add(r.date)
+						return true
+					})
+					unique.sort((a, b) => a.date.localeCompare(b.date))
 
-					if (result.length === 0) {
-						// Fallback — eski usul
-						const promises = []
-						const allDates2 = []
-						const d2 = new Date(start)
-						while (d2 <= end) { allDates2.push(new Date(d2)); d2.setDate(d2.getDate() + 1) }
-						const step = Math.max(1, Math.floor(allDates2.length / 15))
-						allDates2.filter((_, i) => i % step === 0).forEach(d3 => {
-							promises.push(
-								fetch(`${CBU_PROXY}?cur=${cur}&date=${fmt(d3)}`)
-									.then(r => r.json())
-									.then(data => ({ date: fmt(d3), rate: data[0] ? parseFloat(data[0].Rate) / parseInt(data[0].Nominal || 1) : null }))
-									.catch(() => ({ date: fmt(d3), rate: null }))
-							)
-						})
-						const res2 = await Promise.all(promises)
-						res2.sort((a, b) => a.date.localeCompare(b.date))
-						dates = res2.map(r => r.date)
-						vals = res2.map(r => from === 'UZS' && r.rate ? 1 / r.rate : r.rate)
-					} else {
-						dates = result.map(r => r.date)
-						vals = result.map(r => from === 'UZS' ? 1 / r.rate : r.rate)
-					}
+					dates = unique.map(r => r.date)
+					vals = unique.map(r => from === 'UZS' && r.rate ? 1 / r.rate : r.rate)
 
 				} else {
 					const r = await fetch(`${FX_BASE}/${fmt(start)}..${fmt(end)}?from=${from}&to=${to}`)
