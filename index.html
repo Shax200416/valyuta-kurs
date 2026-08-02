@@ -920,10 +920,10 @@
 			const statusEl = document.getElementById('chartStatus')
 			statusEl.textContent = t('loading')
 
+			const fmt = d => d.toISOString().split('T')[0]
 			const end = new Date()
 			const start = new Date()
 			start.setDate(start.getDate() - period)
-			const fmt = d => d.toISOString().split('T')[0]
 
 			try {
 				let dates = [], vals = []
@@ -931,43 +931,44 @@
 				if (from === 'UZS' || to === 'UZS') {
 					const cur = from === 'UZS' ? to : from
 
-					// Har 3 kunda bitta nuqta — 10-30 so'rov
-					const points = []
-					const step = Math.max(1, Math.floor(period / 20))
-					const d = new Date(start)
-					while (d <= end) {
-						points.push(fmt(new Date(d)))
-						d.setDate(d.getDate() + step)
+					// Avval history API dan olamiz
+					const histRes = await fetch(`/api/history?cur=${cur}&days=${period}`)
+					const histData = await histRes.json()
+
+					if (Array.isArray(histData) && histData.length > 1) {
+						// History API dan ma'lumot keldi
+						dates = histData.map(r => r.date)
+						vals = histData.map(r => from === 'UZS' ? 1 / r.rate : r.rate)
+					} else {
+						// Fallback — CBU dan bir nechta nuqta
+						statusEl.textContent = t('loading')
+						const points = []
+						const step = Math.max(3, Math.floor(period / 10))
+						const d = new Date(start)
+						while (d <= end) {
+							points.push(fmt(new Date(d)))
+							d.setDate(d.getDate() + step)
+						}
+						if (!points.includes(fmt(end))) points.push(fmt(end))
+
+						const results = await Promise.all(points.map(dateStr =>
+							fetch(`${CBU_PROXY}?cur=${cur}&date=${dateStr}`)
+								.then(r => r.json())
+								.then(data => {
+									if (!data[0]) return null
+									const rate = parseFloat(data[0].Rate) / parseInt(data[0].Nominal || 1)
+									const parts = data[0].Date.split('.')
+									return { date: `${parts[2]}-${parts[1]}-${parts[0]}`, rate }
+								})
+								.catch(() => null)
+						))
+
+						const seen = new Set()
+						const unique = results.filter(r => r && !seen.has(r.date) && seen.add(r.date))
+						unique.sort((a, b) => a.date.localeCompare(b.date))
+						dates = unique.map(r => r.date)
+						vals = unique.map(r => from === 'UZS' ? 1 / r.rate : r.rate)
 					}
-					// Oxirgi kun har doim bo'lsin
-					const todayFmt = fmt(end)
-					if (!points.includes(todayFmt)) points.push(todayFmt)
-
-					const results = await Promise.all(points.map(dateStr =>
-						fetch(`${CBU_PROXY}?cur=${cur}&date=${dateStr}`)
-							.then(r => r.json())
-							.then(data => {
-								if (!data[0]) return { date: dateStr, rate: null }
-								const rate = parseFloat(data[0].Rate) / parseInt(data[0].Nominal || 1)
-								// CBU qaytargan haqiqiy sanani ishlatamiz
-								const parts = data[0].Date.split('.')
-								const realDate = `${parts[2]}-${parts[1]}-${parts[0]}`
-								return { date: realDate, rate }
-							})
-							.catch(() => ({ date: dateStr, rate: null }))
-					))
-
-					// Takroriy sanalarni olib tashlash
-					const seen = new Set()
-					const unique = results.filter(r => {
-						if (seen.has(r.date)) return false
-						seen.add(r.date)
-						return true
-					})
-					unique.sort((a, b) => a.date.localeCompare(b.date))
-
-					dates = unique.map(r => r.date)
-					vals = unique.map(r => from === 'UZS' && r.rate ? 1 / r.rate : r.rate)
 
 				} else {
 					const r = await fetch(`${FX_BASE}/${fmt(start)}..${fmt(end)}?from=${from}&to=${to}`)

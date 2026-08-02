@@ -1,5 +1,8 @@
 {
-  "rewrites": [
-    { "source": "/api/cbu/:path*", "destination": "/api/cbu?path=:path*" }
+  "crons": [
+    {
+      "path": "/api/save-rates",
+      "schedule": "0 12 * * *"
+    }
   ]
 }

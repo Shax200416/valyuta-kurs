@@ -3,18 +3,15 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Cache-Control', 's-maxage=3600');
 
-  const { cur, date, month, year } = req.query;
+  const { cur, date } = req.query;
 
   let url;
-  if (cur && month && year) {
-    // Oylik tarixiy kurs: /api/cbu?cur=USD&month=07&year=2026
-    url = `https://cbu.uz/uz/arkhiv-kursov-valyut/json/${cur}/${month}.${year}/`;
-  } else if (cur && date) {
-    // Kunlik tarixiy kurs: /api/cbu?cur=USD&date=2026-07-01
+  if (cur && date) {
+    // date = YYYY-MM-DD formatida keladi
     const [y, m, d] = date.split('-');
+    // CBU API DD.MM.YYYY formatini qabul qiladi
     url = `https://cbu.uz/uz/arkhiv-kursov-valyut/json/${cur}/${d}.${m}.${y}/`;
   } else {
-    // Bugungi barcha kurslar
     url = `https://cbu.uz/uz/arkhiv-kursov-valyut/json/`;
   }
 
